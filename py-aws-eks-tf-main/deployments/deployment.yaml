@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pyeksaws-deployment
+  labels:
+    app: pyeksaws
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pyeksaws
+  template:
+    metadata:
+      labels:
+        app: pyeksaws
+    spec:
+      nodeSelector:
+        eks.amazonaws.com/nodegroup: pyeksaws-node-group
+      containers:
+      - name: pyeksaws
+        image: pyeksaws/python:latest
+        ports:
+        - containerPort: 50051
